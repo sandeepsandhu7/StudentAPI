@@ -1,0 +1,85 @@
+﻿@model IEnumerable<StudentMVC.Models.StudentVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a href="@Url.Action("AddOrEdit", "StudentMasters")" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Create</a>
+</p>
+<table class="table table-striped">
+    <thead class="table-bordered" style="background-color:aquamarine">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FatherName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Class)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FatherName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mobile)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            <a href="@Url.Action("AddOrEdit", "StudentMasters", new { id = item.ID })" class="btn btn-success"><i class="glyphicon glyphicon-pencil"></i>Edit</a>
+            <a onclick="Delete(@item.ID)" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Delete</a>
+
+        </td>
+    </tr>
+    }
+
+</table>
+
+@section scripts{
+    <script>
+        $(function () {
+            var SuccessMessage = '@TempData["SuccessMessage"]';
+            if (SuccessMessage != '') {
+                alertify.success(SuccessMessage);
+            }
+        });
+        function Delete(id) {
+            alertify.confirm('WebApi CRUD Operation', 'Are you sure you want to delete this record?', function () {
+                window.location.href = '@Url.Action("Delete","StudentMasters")/'  +id
+            }, null);
+        }
+    </script>
+}
+
+
